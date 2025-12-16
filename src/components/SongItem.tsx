@@ -4,9 +4,11 @@ import { Song } from "../services/SongService";
 export interface SongProps {
   song: Song;
   onToggleDownload: (song: Song, isSelected: boolean) => void;
+  isDownloading?: boolean;
+  isSelected?: boolean;
 }
 
-export function SongItem({ song, onToggleDownload }: SongProps) {
+export function SongItem({ song, onToggleDownload, isDownloading = false, isSelected = false }: SongProps) {
   const {videoUrl, title, thumbnail, channelTitle, publishTime
   } = song;
 
@@ -39,7 +41,9 @@ export function SongItem({ song, onToggleDownload }: SongProps) {
           <input
             type="checkbox"
             onChange={handleCheckboxChange}
-            className="w-4 h-4 text-blue-500 border-gray-300 rounded focus:ring-blue-500"
+            checked={isSelected}
+            disabled={isDownloading}
+            className={`w-4 h-4 text-blue-500 border-gray-300 rounded focus:ring-blue-500 ${isDownloading ? 'opacity-50 cursor-not-allowed' : ''}`}
           />
           <span>Select for download</span>
         </label>
